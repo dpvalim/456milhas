@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 
 public class Voo {
 
+    Aeronave aeronave;
     LocalEmbarque localEmbarque;
+    BigDecimal preco;
 
     //  Calcula preco de acordo com o tipo de passageiro
     BigDecimal getPreco(TipoPassageiro tipoPassageiro) {
