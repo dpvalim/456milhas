@@ -26,7 +26,7 @@ public class Roteiro {
         return getVoosIda().stream().findFirst().get();
     }
 
-    // obter total de taxa de servico
+    // obter total de taxa de servico por quantidade de passageiros
     BigDecimal getTaxaServico(EspecificacaoPassageiros especificacaoPassageiros) {
         BigDecimal qtdPassageiros = BigDecimal.valueOf(especificacaoPassageiros.getQtdPassageiros());
         return taxaDeServico.multiply(qtdPassageiros);
@@ -40,9 +40,23 @@ public class Roteiro {
     }
 
     // obter preco total sem taxas por tipo de passageiro
-    BigDecimal getPreco(TipoPassageiro tipoPassageiro) {
+    BigDecimal getPrecoSemTaxas(TipoPassageiro tipoPassageiro, Integer quantidade) {
         BigDecimal precoVooIda = getVooIda().getPreco(tipoPassageiro);
         BigDecimal precoVooVolta = getVooVolta().getPreco(tipoPassageiro);
-        return precoVooIda.add(precoVooVolta);
+        return precoVooIda.add(precoVooVolta).multiply(BigDecimal.valueOf(quantidade));
+    }
+
+    // obter total com taxas
+    BigDecimal getTotalRoteiro(EspecificacaoPassageiros especificacaoPassageiros) {
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        List<TipoPassageiro> lista = especificacaoPassageiros.separadasPorTipo();
+        for (TipoPassageiro tipo : lista) {
+            total = total.add(getPrecoSemTaxas(tipo, especificacaoPassageiros.getQtdPassageiros(tipo)));
+        }
+
+        total = total.add(getTaxaServico(especificacaoPassageiros)).add(getTaxaEmbarque(especificacaoPassageiros));
+        return total;
     }
 }
