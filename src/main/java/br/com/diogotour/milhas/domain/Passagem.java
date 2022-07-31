@@ -1,7 +1,7 @@
-package br.com.diogotour.milhas;
+package br.com.diogotour.milhas.domain;
 
 public class Passagem {
-    Voo voo;
+    Itinerario itinerario;
     Passageiro passageiro;
     StatusPassagem status;
 }

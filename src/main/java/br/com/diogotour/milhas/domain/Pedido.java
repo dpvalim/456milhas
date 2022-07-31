@@ -1,4 +1,4 @@
-package br.com.diogotour.milhas;
+package br.com.diogotour.milhas.domain;
 
 import java.util.List;
 

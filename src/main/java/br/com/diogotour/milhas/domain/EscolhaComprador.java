@@ -1,9 +1,9 @@
-package br.com.diogotour.milhas;
+package br.com.diogotour.milhas.domain;
 
 public class EscolhaComprador {
 
     EspecificacaoPassageiros especificacaoPassageiros;
-    Voo ida;
-    Voo volta;
+    Itinerario ida;
+    Itinerario volta;
 
 }

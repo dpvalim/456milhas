@@ -1,6 +1,5 @@
-package br.com.diogotour.milhas;
+package br.com.diogotour.milhas.domain;
 
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.List;
 

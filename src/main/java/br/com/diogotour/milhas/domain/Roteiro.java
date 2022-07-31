@@ -1,35 +1,34 @@
-package br.com.diogotour.milhas;
+package br.com.diogotour.milhas.domain;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class Roteiro {
 
-    List<Voo> voosIda;
-    List<Voo> voosVolta;
+    List<Itinerario> itinerariosIda;
+    List<Itinerario> itinerariosVolta;
 
     BigDecimal taxaDeServico;
 
-    List<Voo> getVoosIda() {
-        return voosIda;
+    List<Itinerario> getOpcoesIda() {
+        return itinerariosIda;
     }
 
-    public List<Voo> getVoosVolta() {
-        return voosVolta;
+    public List<Itinerario> getOpcoesVolta() {
+        return itinerariosVolta;
     }
 
-    private Voo getVooVolta() {
-        return getVoosVolta().stream().findFirst().get();
+    private Itinerario getVooVolta() {
+        return getOpcoesVolta().stream().findFirst().get();
     }
 
-    private Voo getVooIda() {
-        return getVoosIda().stream().findFirst().get();
+    private Itinerario getVooIda() {
+        return getOpcoesIda().stream().findFirst().get();
     }
 
     // obter total de taxa de servico por quantidade de passageiros
     BigDecimal getTaxaServico(EspecificacaoPassageiros especificacaoPassageiros) {
-        BigDecimal qtdPassageiros = BigDecimal.valueOf(especificacaoPassageiros.getQtdPassageiros());
-        return taxaDeServico.multiply(qtdPassageiros);
+        return taxaDeServico.multiply(especificacaoPassageiros.getQtdPassageiros());
     }
 
     // obter total da taxa de embarque
@@ -49,14 +48,11 @@ public class Roteiro {
     // obter total com taxas
     BigDecimal getTotalRoteiro(EspecificacaoPassageiros especificacaoPassageiros) {
 
-        BigDecimal total = BigDecimal.ZERO;
-
         List<TipoPassageiro> lista = especificacaoPassageiros.separadasPorTipo();
-        for (TipoPassageiro tipo : lista) {
-            total = total.add(getPrecoSemTaxas(tipo, especificacaoPassageiros.getQtdPassageiros(tipo)));
-        }
 
-        total = total.add(getTaxaServico(especificacaoPassageiros)).add(getTaxaEmbarque(especificacaoPassageiros));
-        return total;
+        return lista.stream()
+                .map(tipo -> getPrecoSemTaxas(tipo, especificacaoPassageiros.getQtdPassageiros(tipo)))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
     }
 }

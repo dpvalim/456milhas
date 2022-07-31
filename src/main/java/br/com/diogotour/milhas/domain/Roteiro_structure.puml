@@ -1,0 +1,248 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "br.com.diogotour.milhas.domain.Roteiro",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_98689 { 
+   	label=com
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_155508765 { 
+   	label=diogotour
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Acontecimento24210375[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Acontecimento</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   horaChegada: LocalDateTime [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   horaPartida: LocalDateTime [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ compareTo(o: Acontecimento): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Aeroporto24210375[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Aeroporto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   codigoIATA: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   localidade: Localidade [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   nome: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   taxa: BigDecimal [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># getTaxaEmbarque(especificacaoPassageiros: EspecificacaoPassageiros): BigDecimal</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CiaAerea24210375[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CiaAerea</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   codigo: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   nome: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+EspecificacaoPassageiros24210375[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EspecificacaoPassageiros</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   especificacao: Map&lt;TipoPassageiro, Integer&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getQtdPassageiros(tipo: TipoPassageiro): Integer</TD></TR>
+<TR><TD ALIGN="LEFT" >+ separadasPorTipo(): List&lt;TipoPassageiro&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Itinerario24210375[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Itinerario</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   conexoes: SortedSet&lt;Acontecimento&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   preco: BigDecimal [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   qtdBagagens: Integer [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- geUltimoVoo(): Voo</TD></TR>
+<TR><TD ALIGN="LEFT" ># getPreco(tipoPassageiro: TipoPassageiro): BigDecimal</TD></TR>
+<TR><TD ALIGN="LEFT" ># getTaxaEmbarque(especificacaoPassageiros: EspecificacaoPassageiros): BigDecimal</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Localidade24210375[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Localidade</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   cidade: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   estado: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   pais: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   sigla: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Roteiro24210375[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Roteiro</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   itinerariosIda: List&lt;Itinerario&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   itinerariosVolta: List&lt;Itinerario&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   taxaDeServico: BigDecimal [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># getPrecoSemTaxas(tipoPassageiro: TipoPassageiro, quantidade: Integer): BigDecimal</TD></TR>
+<TR><TD ALIGN="LEFT" ># getTaxaEmbarque(especificacaoPassageiros: EspecificacaoPassageiros): BigDecimal</TD></TR>
+<TR><TD ALIGN="LEFT" ># getTaxaServico(especificacaoPassageiros: EspecificacaoPassageiros): BigDecimal</TD></TR>
+<TR><TD ALIGN="LEFT" ># getTotalRoteiro(especificacaoPassageiros: EspecificacaoPassageiros): BigDecimal</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Voo24210375[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Voo</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   ciaAerea: CiaAerea [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   codigo: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   localDesembarque: Aeroporto [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   localEmbarque: Aeroporto [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" ># getTaxaEmbarque(especificacaoPassageiros: EspecificacaoPassageiros): BigDecimal</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+Acontecimento24210375 -> Voo24210375[arrowhead=none, arrowtail=empty, dir=both];
+Aeroporto24210375 -> Localidade24210375[label="localidade
+[0..1]"];
+Itinerario24210375 -> Acontecimento24210375[label="conexoes
+[0..*]"];
+Itinerario24210375 -> Voo24210375[label="getTaxaEmbarque() -> getTaxaEmbarque()"];
+Roteiro24210375 -> Itinerario24210375[label="itinerariosIda
+[0..*]"];
+Roteiro24210375 -> Itinerario24210375[label="itinerariosVolta
+[0..*]"];
+Voo24210375 -> Aeroporto24210375[label="localDesembarque
+[0..1]"];
+Voo24210375 -> Aeroporto24210375[label="localEmbarque
+[0..1]"];
+Voo24210375 -> CiaAerea24210375[label="ciaAerea
+[0..1]"];
+    
+}
+@enduml
