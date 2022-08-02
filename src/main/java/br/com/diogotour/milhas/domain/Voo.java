@@ -1,12 +1,20 @@
 package br.com.diogotour.milhas.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
-
+@Entity
 public class Voo extends Acontecimento {
 
+    @Id
+    @Column(length = 6)
     String codigo;
+    @OneToOne
     CiaAerea ciaAerea;
+    @ManyToOne
+    @JoinColumn(name = "cod_iata_emb")
     Aeroporto localEmbarque;
+    @ManyToOne
+    @JoinColumn(name = "cod_iata_desemb")
     Aeroporto localDesembarque;
 
     String getNomeCiaAerea() {
