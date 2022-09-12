@@ -2,6 +2,7 @@ package br.com.diogotour.milhas.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+
 @Entity
 public class Voo extends Acontecimento {
 

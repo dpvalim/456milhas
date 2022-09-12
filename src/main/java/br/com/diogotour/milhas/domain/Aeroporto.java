@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.math.BigDecimal;
+
 @Entity
 public class Aeroporto {
 
