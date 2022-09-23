@@ -5,7 +5,9 @@ import java.util.List;
 
 public class TodosRoteiros {
 
-    List<Roteiro> com(Localidade origem, Localidade destino, LocalDateTime ida, LocalDateTime volta, EspecificacaoPassageiros passageiros) {
+    List<Roteiro> com(Localidade origem, Localidade destino,
+                      LocalDateTime dataHoraIda, LocalDateTime dataHoraVolta,
+                      EspecificacaoPassageiros passageiros) {
         return null;
     }
 

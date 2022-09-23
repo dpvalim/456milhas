@@ -9,7 +9,8 @@ public class Voo extends Acontecimento {
     @Id
     @Column(length = 6)
     String codigo;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "cod_cia_aerea")
     CiaAerea ciaAerea;
     @ManyToOne
     @JoinColumn(name = "cod_iata_emb")
