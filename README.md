@@ -4,7 +4,11 @@
     - Consultar passagens disponíveis:
         - data de ida/volta
         - local de origem/destino
-        - quantidade de passagens
+        - especificação de passageiros
+        - ordenação natural
+        - agrupamento dos roteiros pelo valor total
+        - disponibilidade de lugares (em andamento)
+        - vôos com conexão (em andamento)
 
 
 - Reserva de hotéis
