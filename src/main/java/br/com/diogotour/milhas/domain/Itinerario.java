@@ -4,12 +4,19 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Itinerario {
 
     BigDecimal preco;
     Integer qtdBagagens;
-    SortedSet<Acontecimento> conexoes;
+    SortedSet<Acontecimento> conexoes = new TreeSet<>();
+
+    public Itinerario(final Voo voo) {
+        super();
+        this.preco = voo.preco;
+        this.conexoes.add(voo);
+    }
 
     //  Calcula preco de acordo com o tipo de passageiro
     BigDecimal getPreco(TipoPassageiro tipoPassageiro) {
@@ -81,6 +88,24 @@ public class Itinerario {
     public String getDuracaoTotal() {
         Duration total = this.conexoes.stream().map(Acontecimento::getDuracao).reduce(Duration.ZERO, Duration::plus);
         return total.toHoursPart() + "h " + total.toMinutesPart() + "m";
+    }
+
+    public boolean existeVoo(Voo voo) {
+        for (Acontecimento v : this.conexoes) {
+            if (((Voo)v).equals(voo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Itinerario{" +
+                "preco=" + preco +
+                ", qtdBagagens=" + qtdBagagens +
+                ", conexoes=" + conexoes +
+                '}';
     }
 }
 

@@ -3,7 +3,7 @@ package br.com.diogotour.milhas.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 @Entity
@@ -13,7 +13,7 @@ public class Aeroporto {
     @Column(length = 4)
     String codigoIATA;
     String nome;
-    @OneToOne
+    @ManyToOne
     Localidade localidade;
     BigDecimal taxa;
 

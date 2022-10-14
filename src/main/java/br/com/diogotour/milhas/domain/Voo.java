@@ -2,6 +2,7 @@ package br.com.diogotour.milhas.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 public class Voo extends Acontecimento {
@@ -18,6 +19,16 @@ public class Voo extends Acontecimento {
     @ManyToOne
     @JoinColumn(name = "cod_iata_desemb")
     Aeroporto localDesembarque;
+
+    Integer qtdTotalAssentos;
+
+    @Column(name = "qtd_ass_disp_adulto")
+    Integer qtdAssentosDisponiveisAdulto;
+
+    @Column(name = "qtd_ass_disp_bebe")
+    Integer qtdAssentosDisponiveisBebe;
+
+    BigDecimal preco;
 
     String getNomeCiaAerea() {
         return this.ciaAerea.getNome();
@@ -51,5 +62,32 @@ public class Voo extends Acontecimento {
         return localEmbarque.getCodigoIATA();
     }
 
+    @Override
+    public String toString() {
+        return "Voo{" +
+                "codigo='" + codigo + '\'' +
+                ", ciaAerea=" + ciaAerea.getNome() +
+                ", localEmbarque=" + localEmbarque.getNome() +
+                ", localDesembarque=" + localDesembarque.getNome() +
+                ", qtdTotalAssentos=" + qtdTotalAssentos +
+                ", qtdAssentosDisponiveisAdulto=" + qtdAssentosDisponiveisAdulto +
+                ", qtdAssentosDisponiveisBebe=" + qtdAssentosDisponiveisBebe +
+                ", horaPartida=" + horaPartida +
+                ", horaChegada=" + horaChegada +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Voo voo = (Voo) o;
+        return codigo.equals(voo.codigo) && ciaAerea.equals(voo.ciaAerea) && localEmbarque.equals(voo.localEmbarque) && localDesembarque.equals(voo.localDesembarque);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo, ciaAerea, localEmbarque, localDesembarque);
+    }
 }
 

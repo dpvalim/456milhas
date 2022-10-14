@@ -1,8 +1,10 @@
 package br.com.diogotour.milhas.domain;
 
+import javax.persistence.MappedSuperclass;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@MappedSuperclass
 public abstract class Acontecimento implements Comparable<Acontecimento> {
 
     LocalDateTime horaPartida;

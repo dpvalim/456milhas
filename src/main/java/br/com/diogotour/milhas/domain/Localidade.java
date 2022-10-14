@@ -1,9 +1,7 @@
 package br.com.diogotour.milhas.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Localidade {
@@ -16,6 +14,9 @@ public class Localidade {
     String cidade;
     String estado;
     String pais;
+
+    @OneToMany
+    List<Aeroporto> aeroportos;
 
     public String getCidade() {
         return cidade;

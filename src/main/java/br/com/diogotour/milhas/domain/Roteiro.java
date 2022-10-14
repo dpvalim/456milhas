@@ -1,20 +1,29 @@
 package br.com.diogotour.milhas.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Roteiro {
 
-    List<Itinerario> itinerariosIda;
-    List<Itinerario> itinerariosVolta;
+    Set<Itinerario> itinerariosIda = new HashSet<>();
+    Set<Itinerario> itinerariosVolta = new HashSet<>();
 
-    BigDecimal taxaDeServico;
+    BigDecimal taxaDeServico = new BigDecimal(50);
 
-    List<Itinerario> getOpcoesIda() {
+    public Roteiro(Itinerario itinerarioIda, Itinerario itinerarioVolta) {
+        super();
+        this.itinerariosIda.add(itinerarioIda);
+        this.itinerariosVolta.add(itinerarioVolta);
+    }
+
+    Set<Itinerario> getOpcoesIda() {
         return itinerariosIda;
     }
 
-    public List<Itinerario> getOpcoesVolta() {
+    public Set<Itinerario> getOpcoesVolta() {
         return itinerariosVolta;
     }
 
@@ -54,5 +63,14 @@ public class Roteiro {
                 .map(tipo -> getPrecoSemTaxas(tipo, especificacaoPassageiros.getQtdPassageiros(tipo)))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+    }
+
+    @Override
+    public String toString() {
+        return "Roteiro{" +
+                "itinerariosIda=" + itinerariosIda +
+                ", itinerariosVolta=" + itinerariosVolta +
+                ", taxaDeServico=" + taxaDeServico +
+                '}';
     }
 }
