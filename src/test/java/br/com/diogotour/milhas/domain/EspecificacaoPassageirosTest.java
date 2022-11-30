@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
+import static br.com.diogotour.milhas.domain.EspecificacaoPassageiros.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EspecificacaoPassageirosTest {
@@ -14,11 +15,10 @@ class EspecificacaoPassageirosTest {
 
     @BeforeEach
     void setUp() {
-        passageiros = new EspecificacaoPassageiros();
-        passageiros.especificacao = new HashMap<>();
-        passageiros.especificacao.put(TipoPassageiro.ADULTO, 2);
-        passageiros.especificacao.put(TipoPassageiro.CRIANCA, 1);
-        passageiros.especificacao.put(TipoPassageiro.BEBE, 1);
+        passageiros = new EspecificacaoPassageirosBuilder(TipoPassageiro.ADULTO, 2)
+                .com(TipoPassageiro.CRIANCA, 1)
+                .com(TipoPassageiro.BEBE, 1)
+                .build();
     }
 
     @Test

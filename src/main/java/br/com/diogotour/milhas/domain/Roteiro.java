@@ -1,15 +1,15 @@
 package br.com.diogotour.milhas.domain;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
-public class Roteiro {
+public class Roteiro implements Comparable<Roteiro>{
 
-    Set<Itinerario> itinerariosIda = new HashSet<>();
-    Set<Itinerario> itinerariosVolta = new HashSet<>();
+    Set<Itinerario> itinerariosIda = new TreeSet<>();
+    Set<Itinerario> itinerariosVolta = new TreeSet<>();
 
     BigDecimal taxaDeServico = new BigDecimal(50);
 
@@ -36,26 +36,26 @@ public class Roteiro {
     }
 
     // obter total de taxa de servico por quantidade de passageiros
-    BigDecimal getTaxaServico(EspecificacaoPassageiros especificacaoPassageiros) {
+    public BigDecimal getTaxaServico(EspecificacaoPassageiros especificacaoPassageiros) {
         return taxaDeServico.multiply(especificacaoPassageiros.getQtdPassageiros());
     }
 
     // obter total da taxa de embarque
-    BigDecimal getTaxaEmbarque(EspecificacaoPassageiros especificacaoPassageiros) {
+    public BigDecimal getTaxaEmbarque(EspecificacaoPassageiros especificacaoPassageiros) {
         BigDecimal taxaEmbarqueIda = getVooIda().getTaxaEmbarque(especificacaoPassageiros);
         BigDecimal taxaEmbarqueVolta = getVooVolta().getTaxaEmbarque(especificacaoPassageiros);
         return taxaEmbarqueIda.add(taxaEmbarqueVolta);
     }
 
     // obter preco total sem taxas por tipo de passageiro
-    BigDecimal getPrecoSemTaxas(TipoPassageiro tipoPassageiro, Integer quantidade) {
+    public BigDecimal getPrecoSemTaxas(TipoPassageiro tipoPassageiro, Integer quantidade) {
         BigDecimal precoVooIda = getVooIda().getPreco(tipoPassageiro);
         BigDecimal precoVooVolta = getVooVolta().getPreco(tipoPassageiro);
         return precoVooIda.add(precoVooVolta).multiply(BigDecimal.valueOf(quantidade));
     }
 
     // obter total com taxas
-    BigDecimal getTotalRoteiro(EspecificacaoPassageiros especificacaoPassageiros) {
+    public BigDecimal getTotalRoteiro(EspecificacaoPassageiros especificacaoPassageiros) {
 
         List<TipoPassageiro> lista = especificacaoPassageiros.separadasPorTipo();
 
@@ -68,9 +68,33 @@ public class Roteiro {
     @Override
     public String toString() {
         return "Roteiro{" +
-                "itinerariosIda=" + itinerariosIda +
-                ", itinerariosVolta=" + itinerariosVolta +
+                "itinerariosIda[" + itinerariosIda.size() +"]=" + itinerariosIda +
+                ", itinerariosVolta[" + itinerariosVolta.size() +"]=" + itinerariosVolta +
                 ", taxaDeServico=" + taxaDeServico +
                 '}';
+    }
+
+    private void adicionarItinerario(Itinerario itinerarioIda, Set<Itinerario> itinerarios) {
+        boolean itinerarioNaLista = itinerarios.stream().anyMatch(itinerario -> itinerario.existeVoo(itinerarioIda.getPrimeiroVoo()));
+
+        if (!itinerarioNaLista) {
+            this.itinerariosIda.add(itinerarioIda);
+        }
+    }
+
+    public Roteiro adicionarItinerarios(Itinerario itinerarioIda, Itinerario itinerarioVolta) {
+        this.adicionarItinerario(itinerarioIda, getOpcoesIda());
+        this.adicionarItinerario(itinerarioVolta, getOpcoesVolta());
+
+        return this;
+    }
+
+    private BigDecimal getPrecoBase() {
+        return this.getPrecoSemTaxas(TipoPassageiro.ADULTO, 1);
+    }
+
+    @Override
+    public int compareTo(Roteiro roteiro) {
+        return getPrecoBase().compareTo(roteiro.getPrecoBase());
     }
 }

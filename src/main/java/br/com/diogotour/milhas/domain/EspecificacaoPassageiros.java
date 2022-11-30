@@ -6,7 +6,11 @@ import java.util.stream.Collectors;
 
 public class EspecificacaoPassageiros {
 
-    protected Map<TipoPassageiro, Integer> especificacao = new HashMap<>();
+    private Map<TipoPassageiro, Integer> especificacao;
+
+    EspecificacaoPassageiros(Map<TipoPassageiro, Integer> especificacao) {
+        this.especificacao = especificacao;
+    }
 
     public BigDecimal getQtdPassageiros() {
         return BigDecimal.valueOf(especificacao.values().stream().reduce(0, Integer::sum));
@@ -17,6 +21,26 @@ public class EspecificacaoPassageiros {
     }
 
     public Integer getQtdPassageiros(TipoPassageiro...tipos) {
-        return Arrays.stream(tipos == null || tipos.length == 0 ? TipoPassageiro.values() : tipos).mapToInt(tipo -> especificacao.getOrDefault(tipo, 0)).sum();
+        return Arrays.stream(Optional.ofNullable(tipos).orElse(TipoPassageiro.values()))
+                .mapToInt(tipo -> especificacao.getOrDefault(tipo, 0)).sum();
     }
+
+    public static class EspecificacaoPassageirosBuilder {
+        private Map<TipoPassageiro, Integer> especificacao;
+
+        public EspecificacaoPassageirosBuilder(TipoPassageiro tipo, Integer quantidade) {
+            this.especificacao = new HashMap<>();
+            this.com(tipo, quantidade);
+        }
+
+        public EspecificacaoPassageirosBuilder com(TipoPassageiro tipo, Integer quantidade) {
+            this.especificacao.putIfAbsent(tipo, quantidade);
+            return this;
+        }
+
+        public EspecificacaoPassageiros build() {
+            return new EspecificacaoPassageiros(especificacao);
+        }
+    }
+
 }

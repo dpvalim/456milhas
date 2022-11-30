@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,7 +25,7 @@ class ApplicationTests {
 		LocalDateTime dataHora = LocalDateTime.of(2022, 10, 30, 0, 0);
 
 		// voos de Congonhas para qualquer aeroporto do Rio
-		List<Voo> voos = repository.buscarUsandoFiltros(dataHora, "CGH", "RIO", 1, 0);
+		Collection<Voo> voos = repository.buscarUsandoFiltros(dataHora, "CGH", "RIO", 1, 0);
 		assertEquals(4, voos.size());
 
 		// voos de Guarulhos para qualquer aeroporto do Rio

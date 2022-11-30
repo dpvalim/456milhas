@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface VooRepository extends JpaRepository<Voo, Long> {
@@ -17,5 +18,5 @@ public interface VooRepository extends JpaRepository<Voo, Long> {
             "AND (v.localDesembarque.codigoIATA = ?3 OR v.localDesembarque.localidade.sigla = ?3) " +
             "AND v.qtdAssentosDisponiveisAdulto >= ?4 AND v.qtdAssentosDisponiveisBebe >= ?5"
     )
-    List<Voo> buscarUsandoFiltros(LocalDateTime dataHora, String ida, String volta, Integer qtdAdultos, Integer qtdBebes);
+    Set<Voo> buscarUsandoFiltros(LocalDateTime dataHora, String ida, String volta, Integer qtdAdultos, Integer qtdBebes);
 }

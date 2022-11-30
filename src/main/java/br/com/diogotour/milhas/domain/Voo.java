@@ -3,6 +3,7 @@ package br.com.diogotour.milhas.domain;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 public class Voo extends Acontecimento {
@@ -28,7 +29,20 @@ public class Voo extends Acontecimento {
     @Column(name = "qtd_ass_disp_bebe")
     Integer qtdAssentosDisponiveisBebe;
 
-    BigDecimal preco;
+    private BigDecimal preco;
+
+    public BigDecimal calcularPreco(TipoPassageiro tipoPassageiro) {
+        if (tipoPassageiro != null) {
+            return tipoPassageiro.calcularPreco(this.preco);
+        }
+        return TipoPassageiro.ADULTO.calcularPreco(this.preco);
+    }
+
+    public BigDecimal somaPreco(Voo voo) {
+        if (Objects.equals(this, voo)) return this.preco;
+
+        return this.preco.add(voo.preco);
+    }
 
     String getNomeCiaAerea() {
         return this.ciaAerea.getNome();
@@ -82,12 +96,12 @@ public class Voo extends Acontecimento {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Voo voo = (Voo) o;
-        return codigo.equals(voo.codigo) && ciaAerea.equals(voo.ciaAerea) && localEmbarque.equals(voo.localEmbarque) && localDesembarque.equals(voo.localDesembarque);
+        return codigo.equals(voo.codigo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigo, ciaAerea, localEmbarque, localDesembarque);
+        return Objects.hash(codigo);
     }
 }
 
